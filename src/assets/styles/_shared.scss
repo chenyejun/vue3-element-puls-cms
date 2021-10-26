@@ -1,0 +1,27 @@
+@mixin ell($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+}
+
+@mixin centerLayout($type) {
+  position: absolute;
+
+  @if $type=='row' {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @else if $type=='col' {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @else {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
