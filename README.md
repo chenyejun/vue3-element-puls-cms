@@ -1,24 +1,18 @@
-# vue3-cms1
+# vue3-element-plus-cms
 
-## Project setup
+## 依赖安装
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发运行
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 打包
 ```
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 

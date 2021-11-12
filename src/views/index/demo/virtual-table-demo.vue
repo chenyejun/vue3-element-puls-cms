@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="virtual-table-demo">
     <VirtualTable :data="dataList" lazy :load="onLoad">
       <VirtualTableColumn
         label="姓名"
@@ -21,7 +21,7 @@ import { defineComponent, ref } from 'vue'
 import VirtualTable from '@/components/VirtualTable.vue'
 import VirtualTableColumn from '@/components/VirtualTableColumn.vue'
 export default defineComponent({
-  name: 'table',
+  name: 'virtual-table-demo',
   components: {
     VirtualTable,
     VirtualTableColumn
@@ -57,10 +57,9 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-.table {
+.virtual-table-demo {
   flex: 1;
   padding: 12px;
   box-sizing: border-box;
-  height: 100%;
 }
 </style>

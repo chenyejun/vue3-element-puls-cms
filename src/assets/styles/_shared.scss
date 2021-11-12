@@ -1,3 +1,5 @@
+$mainColor: #409eff;
+
 @mixin ell($line) {
   overflow: hidden;
   text-overflow: ellipsis;

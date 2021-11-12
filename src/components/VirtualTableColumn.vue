@@ -18,6 +18,7 @@ export default defineComponent({
       type: String,
       require: true
     },
+    // 每行数据
     row: {
       type: Object
     },
@@ -26,9 +27,15 @@ export default defineComponent({
       default() {
         return {
           index: '', // 父节点的索引
-          childIndex: '' // 当前父节点下，子节点的索引，父节点该字段为空
+          childIndex: '' // 当前父节点下，子节点的索引，父节点该字段为null
         }
       }
+    },
+    width: {
+      type: [String, Number]
+    },
+    minWidth: {
+      type: [String, Number]
     }
   }
 })

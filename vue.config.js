@@ -1,4 +1,4 @@
-// const path = require('path')
+const path = require('path')
 const isProduction = process.env.NODE_ENV === 'production'
 module.exports = {
   lintOnSave: true,
@@ -16,13 +16,13 @@ module.exports = {
   },
   chainWebpack: config => {
     // svg图标配置
-    // config.module.rule('svg')
-    //   .exclude.add(path.resolve('./src/assets/icons'))
-    // config.module.rule('icons')
-    //   .test(/\.svg$/)
-    //   .include.add(path.resolve('./src/assets/icons')).end()
-    //   .use('svg-sprite-loader')
-    //   .loader('svg-sprite-loader')
+    config.module.rule('svg')
+      .exclude.add(path.resolve('./src/assets/icons'))
+    config.module.rule('icons')
+      .test(/\.svg$/)
+      .include.add(path.resolve('./src/assets/icons')).end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
     if (isProduction) {
       // 为生产环境修改配置...
       config.set('externals', {

@@ -79,11 +79,12 @@
         </el-table>
       </template>
     </el-main>
-    <el-footer class="table-footer">
+    <el-footer
+      class="table-footer"
+      v-if="paging && pagination.pageSizes.some((x) => pagination.total > x)"
+    >
       <!-- 表格底部内容 分页 -->
-      <div
-        v-if="paging && pagination.pageSizes.some((x) => pagination.total > x)"
-      >
+      <div>
         <el-pagination
           layout="total, sizes, prev, pager, next, jumper"
           :page-size="pagination.pageSize"

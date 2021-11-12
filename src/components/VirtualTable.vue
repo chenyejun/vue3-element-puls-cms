@@ -1,11 +1,18 @@
 <template>
-  <section class="virtual-container">
+  <section
+    class="virtual-container"
+    :style="{ 'min-height': `${minHeight}px` }"
+  >
     <div ref="hiddenSlot" class="hidden-slot">
       <slot></slot>
     </div>
     <table class="thead" border="0" cellpadding="0" cellspacing="0">
       <tr>
-        <td v-for="(item, index) in headData" :key="index">
+        <td
+          v-for="(item, index) in headData"
+          :key="index"
+          :width="getColumnProVal(index, 'width')"
+        >
           <div class="cell">
             {{ item.label }}
           </div>
@@ -25,6 +32,7 @@
           <td
             v-for="(childItem, childIndex) in headData"
             :key="`${row[rowKey]}-${childIndex}`"
+            :width="getColumnProVal(childIndex, 'width')"
           >
             <div
               class="cell tbody-cell"
@@ -84,12 +92,18 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from 'vue'
 import { cloneDeep } from 'lodash-es'
+import moniResize from '@/composables/moniResizeTool'
 export default defineComponent({
   name: 'VirtualTable',
   emits: [
     'load-more' // 滚动到底部，加载更多回调事件
   ],
   props: {
+    // 表格的最小高度
+    minHeight: {
+      type: Number,
+      default: 300
+    },
     // 传入的data中，需要一个唯一的key，默认指向id
     rowKey: {
       type: String,
@@ -144,13 +158,15 @@ export default defineComponent({
       // 计算总高度，用于撑开滚动条
       return allData.value.length * props.itemSize
     })
-    onMounted(() => {
+
+    // 计算列表显示的行数
+    const calcVisibleCount = () => {
       screenHeight.value = document
         .querySelector('.virtual-container .tbody')
         ?.getBoundingClientRect().height
       visibleCount = Math.ceil((screenHeight.value as number) / props.itemSize)
       endIndex.value = startIndex.value + visibleCount
-    })
+    }
 
     // 真实渲染到页面的数据
     const visibleData = computed(() => {
@@ -252,8 +268,18 @@ export default defineComponent({
       return list
     }, [])
 
+    // 获取VirtualTableColumn指定的参数值
+    const getColumnProVal = (index: number, propName: string) => {
+      return headData.value[index][propName] || 'auto'
+    }
+
     // console.log(columnRefList[0].children.default())
-    // console.log(columnRefList[1].children.default())
+
+    onMounted(() => {
+      calcVisibleCount()
+    })
+    // 浏览器窗口大小变动，重新计算列表显示行数
+    moniResize(calcVisibleCount)
 
     return {
       startIndex,
@@ -265,13 +291,21 @@ export default defineComponent({
       headData,
       columnRefList,
       isHasChildren,
-      onExpandChild
+      onExpandChild,
+      getColumnProVal
     }
   }
 })
 </script>
 
 <style lang="scss">
+@mixin ell($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+}
 .virtual-container {
   height: 100%;
   display: flex;
@@ -341,6 +375,7 @@ export default defineComponent({
     &-cell {
       display: flex;
       align-items: center;
+      @include ell(1);
       > div {
         &:last-of-type {
           flex: 1;

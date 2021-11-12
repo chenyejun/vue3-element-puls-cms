@@ -1,6 +1,6 @@
 <template>
-  <div class="about">
-    <g-table :fields="fields" :columns="columns"></g-table>
+  <div class="g-table-demo">
+    <g-table :fields="fields" height="640" :columns="columns"></g-table>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { defineComponent, reactive, toRefs, ref } from 'vue'
 import store from '@/store'
 export default defineComponent({
-  name: 'About',
+  name: 'g-table-demo',
   setup() {
     const state = reactive({
       fields: [
@@ -81,7 +81,7 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-.about {
+.g-table-demo {
   height: 100%;
 }
 </style>
